@@ -4,7 +4,7 @@ Time Tracker is an application that lets you track and visualize how you spend y
 
 ## :heavy_check_mark: Build Status
 
-We use GitHub actions to build the app and run unit and integration tests on all pull requests and pushes to the master branch.
+We use GitHub actions to build the app and run unit and integration tests on all pull requests and commits to the master branch.
 
 [![Build and Tests](https://github.com/ubclaunchpad/time-tracker/workflows/Dart%20CI/badge.svg)](https://github.com/ubclaunchpad/time-tracker/actions)
 
