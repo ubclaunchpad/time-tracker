@@ -16,7 +16,7 @@ We use GitHub actions to build the app and run unit and integration tests on all
 
 ## :raising_hand: Contributing
 
-The Time Tracker app is still in progress and it is actively being built by UBC Launch Pad members. We welcome any kind of contributions including issues, pull requests, and general feedback. Please see the [UBC Launch Pad Handbook](https://docs.ubclaunchpad.com/resources/git-workflow) for a guide to contributing to UBC Launch Pad projects on GitHub.
+The Time Tracker app is still in progress and it is actively being built by UBC Launch Pad members. We welcome any kind of contributions including issues, pull requests, and general feedback. Please see the [UBC Launch Pad Handbook](https://docs.ubclaunchpad.com/resources/git-workflow) for a guide to contributing to UBC Launch Pad projects on GitHub. When you start working on an issue, create a new branch named `[issue number]-[short description]` (eg. `1-input-task`).
 
 ### Our Team
 | Name | Role |
