@@ -36,7 +36,7 @@ class DatabaseHelper {
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the database.
         return db.execute(
-          "CREATE TABLE task(id INTEGER PRIMARY KEY, description TEXT, category TEXT, date INTEGER)",
+          "CREATE TABLE task(id INTEGER PRIMARY KEY, description TEXT, category TEXT, time INTEGER)",
         );
       },
       // Set the version. This executes the onCreate function and provides a
