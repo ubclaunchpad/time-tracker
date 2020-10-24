@@ -8,6 +8,8 @@ We use GitHub actions to build the app and run unit and integration tests on all
 
 [![Build and Tests](https://github.com/ubclaunchpad/time-tracker/workflows/Dart%20CI/badge.svg)](https://github.com/ubclaunchpad/time-tracker/actions)
 
+[![codecov](https://codecov.io/gh/ubclaunchpad/time-tracker/branch/master/graph/badge.svg)](https://codecov.io/gh/ubclaunchpad/time-tracker)
+
 ## :computer: Installation
 
 1. The Time Tracker app is built using Flutter. Please follow [this tutorial](https://flutter.dev/docs/get-started/install) to set up your development environment. We recommend using Android Studio because it allows you to easily test your app on an emulator. 
