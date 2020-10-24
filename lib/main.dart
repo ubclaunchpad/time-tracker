@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/task_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,9 +13,17 @@ class MyApp extends StatelessWidget {
           title: Text('Time Tracker'),
         ),
         body: Center(
-          child: Text('Track your time!'),
+          child:RaisedButton(
+	      child: Text('Track your time!'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: (){
+                 Navigator.push(context,MaterialPageRoute(builder:(context)=>TaskListScreen()),
+	      );
+	   }
         ),
       ),
+     ),
     );
   }
 }
