@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'src/screens/add_task.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,14 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Time Tracker',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Time Tracker'),
-        ),
-        body: Center(
-          child: Text('Track your time!'),
-        ),
-      ),
+      home: AddTaskScreen(),
     );
   }
 }
