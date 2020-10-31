@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/add_task.dart';
 import '../screens/dashboard.dart';
 import '../screens/profile.dart';
-import '../screens/task_list_temp.dart'; // TODO: Change after Issue #2 is merged
+import '../screens/task_list.dart';
 import '../models/navigation_route.dart';
 
 final bottomNavigationRoutes = <NavigationRoute>[
