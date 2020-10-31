@@ -7,6 +7,6 @@ void main() {
   testWidgets('Project builds and displays Add Task screen',
       (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
-    expect(find.byKey(Key('add_task_screen')), findsOneWidget);
+    expect(find.byKey(Key('dashboard_screen')), findsOneWidget);
   });
 }
