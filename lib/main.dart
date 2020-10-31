@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'src/screens/add_task.dart';
 
 void main() => runApp(MyApp());
