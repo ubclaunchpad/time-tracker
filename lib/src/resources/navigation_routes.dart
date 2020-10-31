@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../screens/add_task.dart';
 import '../screens/dashboard.dart';
-import '../screens/profile.dart';
+import '../screens/add_task.dart';
 import '../screens/task_list.dart';
+import '../screens/profile.dart';
 import '../models/navigation_route.dart';
 
 final bottomNavigationRoutes = <NavigationRoute>[
