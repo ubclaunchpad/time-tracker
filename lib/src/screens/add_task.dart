@@ -171,19 +171,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SingleChildScrollView(
       key: Key('add_task_screen'),
-      appBar: AppBar(
-        title: Text('Time Tracker'),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 20.0,
-            horizontal: 30.0,
-          ),
-          child: !_isTracking ? renderTaskAdding() : renderTaskTracking(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 20.0,
+          horizontal: 30.0,
         ),
+        child: !_isTracking ? renderTaskAdding() : renderTaskTracking(),
       ),
     );
   }
