@@ -58,5 +58,13 @@ void main() {
     expect(timerScreenFinder, findsNothing);
     expect(statsScreenFinder, findsNothing);
     expect(profileScreenFinder, findsNothing);
+
+    // Tap on task list icon on top navigator bar
+    await tester.tap(find.byKey(Key('task_list_icon')));
+
+    // Click task list icon and assert page navigates to Task List Screen
+    await tester.tap(find.byKey(Key('task_list_icon')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(Key('task_list_screen')), findsOneWidget);
   });
 }

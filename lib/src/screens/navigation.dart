@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../resources/navigation_routes.dart';
+import 'package:time_tracker/src/enums/navigation_route_id.dart';
+import 'package:time_tracker/src/widgets/top_navigation_bar.dart';
+import 'package:time_tracker/src/resources/navigation_routes.dart';
 
 class NavigationScreen extends StatefulWidget {
   @override
@@ -16,28 +18,36 @@ class _NavigationScreenState extends State<NavigationScreen> {
     });
   }
 
+  void _tapTaskListNavButton() {
+    setState(() {
+      _selectedPageIndex = navigationRoutes
+          .indexWhere((route) => route.id == NavigationRouteId.task_list);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: bottomNavigationRoutes.length,
+      length: navigationRoutes.length,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(bottomNavigationRoutes[_selectedPageIndex].title),
+        appBar: TopNavigationBar(
+          title: 'Time Tracker',
+          handleRightButtonClick: _tapTaskListNavButton,
         ),
-        body: bottomNavigationRoutes[_selectedPageIndex].destination,
+        body: navigationRoutes[_selectedPageIndex].destination,
         bottomNavigationBar: BottomNavigationBar(
           onTap: _selectPage,
           unselectedItemColor: Colors.black,
           selectedItemColor: Colors.blue,
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedPageIndex,
-          items: bottomNavigationRoutes
+          items: navigationRoutes
               .asMap()
               .map((index, page) => MapEntry(
                     index,
                     BottomNavigationBarItem(
-                      label: bottomNavigationRoutes[index].title,
-                      icon: bottomNavigationRoutes[index].icon,
+                      label: navigationRoutes[index].title,
+                      icon: navigationRoutes[index].icon,
                     ),
                   ))
               .values

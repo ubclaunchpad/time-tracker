@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-
 // TODO: Replace categories to use Task class after Issue #3 is completed
 // TODO: Refactor styles to use global theming after more designer guidance
-import '../resources/task_categories.dart';
-import '../utils/time_util.dart';
+import 'package:flutter/material.dart';
+
+import 'package:time_tracker/src/resources/task_categories.dart';
+import 'package:time_tracker/src/utils/time_util.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -171,14 +171,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(
       key: Key('add_task_screen'),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20.0,
-          horizontal: 30.0,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 20.0,
+            horizontal: 30.0,
+          ),
+          child: !_isTracking ? renderTaskAdding() : renderTaskTracking(),
         ),
-        child: !_isTracking ? renderTaskAdding() : renderTaskTracking(),
       ),
     );
   }

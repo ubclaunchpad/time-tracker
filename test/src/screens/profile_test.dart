@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:time_tracker/src/screens/profile.dart';
 
+import 'package:time_tracker/src/screens/profile.dart';
 import '../../test_helper.dart';
 
 void main() {
