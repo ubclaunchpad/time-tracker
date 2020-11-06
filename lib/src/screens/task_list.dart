@@ -11,6 +11,7 @@ class TaskListScreen extends StatelessWidget {
   }
 }
 
+//TODO: Replace "titles" and "subtitles" after creating a Task class
 class BodyLayout extends StatelessWidget {
   List<String> titles = [
     'Finish Launch Pad Issue 2',
@@ -28,10 +29,10 @@ class BodyLayout extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return _myListView(context);
+    return listOfTasks(context);
   }
 
-  Widget _myListView(BuildContext context) {
+  Widget listOfTasks(BuildContext context) {
     return ListView.builder(
         itemCount: titles.length,
         itemBuilder: (context, index) {

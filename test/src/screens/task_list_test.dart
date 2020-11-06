@@ -8,7 +8,9 @@ void main() {
   testWidgets('Task List Test', (WidgetTester tester) async {
     final screen = TaskListScreen();
     await tester.pumpWidget(TestHelper.makeTestableWidget(screen));
-    expect(find.byKey(Key('list_tile_0')), findsOneWidget);
+    
+    //assert each of the 5 list tiles representing tasks are present on the Task List Screen
+    expect(find.byKey(Key('list_tile_0')), findsOneWidget); 
     expect(find.byKey(Key('list_tile_1')), findsOneWidget);
     expect(find.byKey(Key('list_tile_2')), findsOneWidget);
     expect(find.byKey(Key('list_tile_3')), findsOneWidget);

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// TODO: Replace categories to use Task class after Issue #3 is completed
+// TODO: Refactor styles to use global theming after more designer guidance
+
 import '../resources/task_categories.dart';
 import '../utils/time_util.dart';
 import '../widgets/top_navigation.dart';
