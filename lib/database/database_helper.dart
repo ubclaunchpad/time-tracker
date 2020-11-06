@@ -8,9 +8,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
 
 class DatabaseHelper {
+  bool test;
+
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
 
-  factory DatabaseHelper() => _instance;
+  factory DatabaseHelper({test = false}) {
+    _instance.test = test;
+    return _instance;
+  }
 
   static Database _db;
 
@@ -31,7 +36,7 @@ class DatabaseHelper {
     print("making the database");
 
     Database database = await openDatabase(
-      join(await getDatabasesPath(), 'data.db'),
+      join(await getDatabasesPath(), test ? 'database_test.db' : 'data.db'),
       // When the database is first created, create a table to store tasks.
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the database.
@@ -45,6 +50,30 @@ class DatabaseHelper {
     );
 
     return database;
+  }
+
+  // get
+  Future<Task> getTask(int id) async {
+    // Get a reference to the database.
+    final Database dbClient = await db;
+
+    // get the Task from the Database.
+    List<Map<String, dynamic>> tasks = await dbClient.query(
+      'task',
+      // Use a `where` clause to delete a specific Task.
+      where: "id = ?",
+      // Pass the Task's id as a whereArg to prevent SQL injection.
+      whereArgs: [id],
+    );
+    if (tasks.length == 0) {
+      return null;
+    }
+
+    return Task(
+        id: tasks[0]["id"],
+        description: tasks[0]["description"],
+        category: tasks[0]["category"],
+        clock: tasks[0]["clock"]);
   }
 
   // Define a function that inserts tasks into the database
@@ -82,7 +111,7 @@ class DatabaseHelper {
     });
   }
 
-// Update
+  // Update
   Future<void> updateTask(Task task) async {
     // Get a reference to the database.
     final Database dbClient = await db;
@@ -98,7 +127,7 @@ class DatabaseHelper {
     );
   }
 
-// delete
+  // delete
   Future<void> deleteTask(int id) async {
     // Get a reference to the database.
     final Database dbClient = await db;
@@ -106,10 +135,18 @@ class DatabaseHelper {
     // Remove the Task from the Database.
     await dbClient.delete(
       'task',
-      // Use a `where` clause to delete a specific Dog.
+      // Use a `where` clause to delete a specific Task.
       where: "id = ?",
       // Pass the Task's id as a whereArg to prevent SQL injection.
       whereArgs: [id],
     );
+  }
+
+  Future<void> resetDatabase() async {
+    // Get a reference to the database.
+    List<Task> task = await tasks();
+    for (int i = 0; i < task.length; i++) {
+      await deleteTask(task[i].id);
+    }
   }
 }

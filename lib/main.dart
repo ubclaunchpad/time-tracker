@@ -6,9 +6,8 @@ import 'dart:developer' as logger;
 void main() async {
   var db = new DatabaseHelper();
 
-  final task = Task(id: 0, description: 'Fido', category: 'Work', clock: 2001);
-  await db.insertTask(task);
-
+  // final task = Task(id: 0, description: 'Fido', category: 'Work', clock: 2001);
+  // await db.insertTask(task);
   return runApp(MyApp());
 }
 
