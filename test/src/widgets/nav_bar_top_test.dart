@@ -17,11 +17,11 @@ void main() {
           body: Container(),
         )));
         
-    //Assert task list icon is present on screen
+    // Assert task list icon is present on screen
     expect(find.byKey(Key('task_list_icon')), findsOneWidget);
     expect(isClicked, false);
 
-    //Click task list icon and assert click function registers
+    // Click task list icon and assert click function registers
     await tester.tap(find.byKey(Key('task_list_icon')));
     await tester.pumpAndSettle();
     expect(isClicked, true);

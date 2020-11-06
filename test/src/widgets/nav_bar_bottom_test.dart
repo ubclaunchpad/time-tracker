@@ -32,7 +32,7 @@ void main() {
     await tester.tap(find.byKey(Key('stats-icon')));
     await tester.pump(const Duration(seconds: 1));
 
-    // Assert start to stats screen
+    // Assert move to stats screen
     expect(dashboardScreenFinder, findsNothing);
     expect(timerScreenFinder, findsNothing);
     expect(statsScreenFinder, findsOneWidget);
@@ -57,13 +57,5 @@ void main() {
     expect(timerScreenFinder, findsNothing);
     expect(statsScreenFinder, findsNothing);
     expect(profileScreenFinder, findsNothing);
-
-    // Tap on task list icon on top navigator bar
-    await tester.tap(find.byKey(Key('task_list_icon')));
-
-    // Click task list icon and assert page navigates to Task List Screen
-    await tester.tap(find.byKey(Key('task_list_icon')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(Key('task_list_screen')), findsOneWidget);
   });
 }

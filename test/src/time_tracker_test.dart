@@ -10,5 +10,10 @@ void main() {
     expect(find.byKey(Key('dashboard_screen')), findsOneWidget);
     expect(find.byKey(Key('nav_bar_top')), findsOneWidget);
     expect(find.byKey(Key('nav_bar_bottom')), findsOneWidget);
+
+    // Click task list icon and assert page navigates to Task List Screen
+    await tester.tap(find.byKey(Key('task_list_icon')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(Key('task_list_screen')), findsOneWidget);
   });
 }
