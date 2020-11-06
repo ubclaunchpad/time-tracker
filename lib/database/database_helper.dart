@@ -31,12 +31,12 @@ class DatabaseHelper {
     print("making the database");
 
     Database database = await openDatabase(
-      join(await getDatabasesPath(), 'task_database.db'),
+      join(await getDatabasesPath(), 'data.db'),
       // When the database is first created, create a table to store tasks.
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the database.
         return db.execute(
-          "CREATE TABLE task(id INTEGER PRIMARY KEY, description TEXT, category TEXT, time INTEGER)",
+          "CREATE TABLE task(id INTEGER PRIMARY KEY, description TEXT, clock INTEGER, category TEXT)",
         );
       },
       // Set the version. This executes the onCreate function and provides a
@@ -53,8 +53,8 @@ class DatabaseHelper {
     // Get a reference to the database.
     final Database dbClient = await db;
 
-    // Insert the Dog into the correct table. You might also specify the
-    // `conflictAlgorithm` to use in case the same dog is inserted twice.
+    // Insert the Task into the correct table. You might also specify the
+    // `conflictAlgorithm` to use in case the same Task is inserted twice.
     //
     // In this case, replace any previous data.
     await dbClient.insert(
@@ -68,8 +68,8 @@ class DatabaseHelper {
     // Get a reference to the database.
     final Database dbClient = await db;
 
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await dbClient.query('tasks');
+    // Query the table for all The Tasks.
+    final List<Map<String, dynamic>> maps = await dbClient.query('task');
 
     // Convert the List<Map<String, dynamic> into a List<Tasks>.
     return List.generate(maps.length, (i) {
@@ -77,8 +77,39 @@ class DatabaseHelper {
         id: maps[i]['id'],
         description: maps[i]['description'],
         category: maps[i]['category'],
-        time: maps[i]['time'],
+        clock: maps[i]['clock'],
       );
     });
+  }
+
+// Update
+  Future<void> updateTask(Task task) async {
+    // Get a reference to the database.
+    final Database dbClient = await db;
+
+    // Update the given Task.
+    await dbClient.update(
+      'task',
+      task.toMap(),
+      // Ensure that the Task has a matching id.
+      where: "id = ?",
+      // Pass the Task's id as a whereArg to prevent SQL injection.
+      whereArgs: [task.id],
+    );
+  }
+
+// delete
+  Future<void> deleteTask(int id) async {
+    // Get a reference to the database.
+    final Database dbClient = await db;
+
+    // Remove the Task from the Database.
+    await dbClient.delete(
+      'task',
+      // Use a `where` clause to delete a specific Dog.
+      where: "id = ?",
+      // Pass the Task's id as a whereArg to prevent SQL injection.
+      whereArgs: [id],
+    );
   }
 }
