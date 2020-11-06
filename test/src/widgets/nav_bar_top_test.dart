@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:time_tracker/src/widgets/top_navigation_bar.dart';
+import 'package:time_tracker/src/widgets/nav_bar_top.dart';
 
 void main() {
-  testWidgets('Top Navigation Bar', (WidgetTester tester) async {
+  testWidgets('Nav Bar Top', (WidgetTester tester) async {
     bool isClicked = false;
 
     await tester.pumpWidget(MaterialApp(
-        title: 'Dummy App',
+        title: 'Dummy',
         home: Scaffold(
-          appBar: TopNavigationBar(
-            title: 'Dummy App',
+          appBar: NavBarTop(
+            title: 'Dummy',
             handleRightButtonClick: () => isClicked = true,
           ),
           body: Container(),

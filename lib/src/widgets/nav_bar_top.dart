@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-class TopNavigationBar extends StatefulWidget implements PreferredSizeWidget {
+class NavBarTop extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Function handleRightButtonClick;
 
-  TopNavigationBar({Key key, this.title, this.handleRightButtonClick})
+  NavBarTop({Key key, this.title, this.handleRightButtonClick})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
   @override
-  _TopNavigationBarState createState() => _TopNavigationBarState();
+  _NavBarTopState createState() => _NavBarTopState();
 
   @override
   final Size preferredSize;
 }
 
-class _TopNavigationBarState extends State<TopNavigationBar> {
+class _NavBarTopState extends State<NavBarTop> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      key: Key('nav_bar_top'),
       title: Text(widget.title),
       actions: [
         IconButton(

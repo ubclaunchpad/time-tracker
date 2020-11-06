@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:time_tracker/src/screens/dashboard.dart';
-import 'package:time_tracker/src/screens/add_task.dart';
-import 'package:time_tracker/src/screens/task_list.dart';
-import 'package:time_tracker/src/screens/profile.dart';
-import 'package:time_tracker/src/models/navigation_route.dart';
 import 'package:time_tracker/src/enums/navigation_route_id.dart';
+import 'package:time_tracker/src/models/navigation_route.dart';
+import 'package:time_tracker/src/screens/add_task.dart';
+import 'package:time_tracker/src/screens/dashboard.dart';
+import 'package:time_tracker/src/screens/profile.dart';
+import 'package:time_tracker/src/screens/task_list.dart';
 
 final navigationRoutes = <NavigationRoute>[
   NavigationRoute(
