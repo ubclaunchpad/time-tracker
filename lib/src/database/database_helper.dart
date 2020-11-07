@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io' as io;
 
-import 'package:time_tracker/models/task.dart';
+import 'file:///C:/Users/sarah/AndroidStudioProjects/time_tracker/lib/src/models/task.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,19 +33,19 @@ class DatabaseHelper {
     // String path = join(documentsDirectory.path, "main.db");
     // var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
     // return theDb;
-    print("making the database");
+    print("making the src.database");
 
     Database database = await openDatabase(
       join(await getDatabasesPath(), test ? 'database_test.db' : 'data.db'),
-      // When the database is first created, create a table to store tasks.
+      // When the src.database is first created, create a table to store tasks.
       onCreate: (db, version) {
-        // Run the CREATE TABLE statement on the database.
+        // Run the CREATE TABLE statement on the src.database.
         return db.execute(
           "CREATE TABLE task(id INTEGER PRIMARY KEY, description TEXT, clock INTEGER, category TEXT)",
         );
       },
       // Set the version. This executes the onCreate function and provides a
-      // path to perform database upgrades and downgrades.
+      // path to perform src.database upgrades and downgrades.
       version: 1,
     );
 
@@ -54,7 +54,7 @@ class DatabaseHelper {
 
   // get
   Future<Task> getTask(int id) async {
-    // Get a reference to the database.
+    // Get a reference to the src.database.
     final Database dbClient = await db;
 
     // get the Task from the Database.
@@ -76,10 +76,10 @@ class DatabaseHelper {
         clock: tasks[0]["clock"]);
   }
 
-  // Define a function that inserts tasks into the database
+  // Define a function that inserts tasks into the src.database
   Future<void> insertTask(Task task) async {
     print("insert");
-    // Get a reference to the database.
+    // Get a reference to the src.database.
     final Database dbClient = await db;
 
     // Insert the Task into the correct table. You might also specify the
@@ -94,7 +94,7 @@ class DatabaseHelper {
   }
 
   Future<List<Task>> tasks() async {
-    // Get a reference to the database.
+    // Get a reference to the src.database.
     final Database dbClient = await db;
 
     // Query the table for all The Tasks.
@@ -113,7 +113,7 @@ class DatabaseHelper {
 
   // Update
   Future<void> updateTask(Task task) async {
-    // Get a reference to the database.
+    // Get a reference to the src.database.
     final Database dbClient = await db;
 
     // Update the given Task.
@@ -129,7 +129,7 @@ class DatabaseHelper {
 
   // delete
   Future<void> deleteTask(int id) async {
-    // Get a reference to the database.
+    // Get a reference to the src.database.
     final Database dbClient = await db;
 
     // Remove the Task from the Database.
@@ -143,7 +143,7 @@ class DatabaseHelper {
   }
 
   Future<void> resetDatabase() async {
-    // Get a reference to the database.
+    // Get a reference to the src.database.
     List<Task> task = await tasks();
     for (int i = 0; i < task.length; i++) {
       await deleteTask(task[i].id);

@@ -2,8 +2,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:time_tracker/database/database_helper.dart';
-import 'package:time_tracker/models/task.dart';
+import 'package:time_tracker/src/database/database_helper.dart';
+import 'file:///C:/Users/sarah/AndroidStudioProjects/time_tracker/lib/src/models/task.dart';
 
 import 'package:time_tracker/main.dart';
 
@@ -36,23 +36,23 @@ void main() {
   });
 
   group('Database Helper', () {
-    test('insert task should put that task in the database', () async {
-      // assert that the task is not in the database before inserting
+    test('insert task should put that task in the src.database', () async {
+      // assert that the task is not in the src.database before inserting
       List<Task> tasks = await db.tasks();
       expect(tasks.length, 0);
 
       // insert task
       await db.insertTask(task);
 
-      // assert that the task is now in the database
+      // assert that the task is now in the src.database
       tasks = await db.tasks();
       expect(tasks.length, 1);
       expect(tasks[0].id, task.id);
     });
 
-    test('insert multiple tasks should put all of them in the database',
+    test('insert multiple tasks should put all of them in the src.database',
         () async {
-      // assert that the task is not in the database before inserting
+      // assert that the task is not in the src.database before inserting
       List<Task> tasks = await db.tasks();
       expect(tasks.length, 0);
 
@@ -61,7 +61,7 @@ void main() {
       await db.insertTask(task2);
       await db.insertTask(task3);
 
-      // assert that the tasks are now in the database
+      // assert that the tasks are now in the src.database
       tasks = await db.tasks();
       expect(tasks.length, 3);
       expect(tasks[0].id, task.id);
@@ -69,8 +69,8 @@ void main() {
       expect(tasks[2].id, task3.id);
     });
 
-    test('update task should update them in the database', () async {
-      // assert that the task is not in the database before inserting
+    test('update task should update them in the src.database', () async {
+      // assert that the task is not in the src.database before inserting
       List<Task> tasks = await db.tasks();
       expect(tasks.length, 0);
 
@@ -93,22 +93,22 @@ void main() {
       expect(updatedTask.description, "this has been updated");
     });
 
-    test('delete task should delete that task from the database', () async {
-      //insert the task into the database
+    test('delete task should delete that task from the src.database', () async {
+      //insert the task into the src.database
       await db.insertTask(task);
-      //assert that the task has been inserted into the database
+      //assert that the task has been inserted into the src.database
       List<Task> tasks = await db.tasks();
       expect(tasks.length, 1);
 
-      //delete the task from the database
+      //delete the task from the src.database
       db.deleteTask(task.id);
 
-      //assert hat the task has been deleted from the database
+      //assert hat the task has been deleted from the src.database
       tasks = await db.tasks();
       expect(tasks.length, 0);
     });
 
-    test('get task should get the task with an id number from the database',
+    test('get task should get the task with an id number from the src.database',
         () async {
       // insert the task
       await db.insertTask(task);
