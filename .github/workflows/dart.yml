@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
     - name: Run tests
-      run: flutter test --coverage
+      run: flutter test test/automated --coverage
     - uses: codecov/codecov-action@v1.0.2
       with:
         token: ${{secrets.CODECOV_TOKEN}}
