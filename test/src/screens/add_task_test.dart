@@ -7,7 +7,7 @@ import 'package:time_tracker/src/resources/task_categories.dart';
 import '../../test_helper.dart';
 
 void main() {
-  testWidgets('Add a task', (WidgetTester tester) async {
+  testWidgets('Add Task Screen', (WidgetTester tester) async {
     final screen = AddTaskScreen();
     await tester.pumpWidget(TestHelper.makeTestableWidget(screen));
 
