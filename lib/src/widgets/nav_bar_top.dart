@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracker/src/services/auth.dart';
 
 class NavBarTop extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -16,6 +17,8 @@ class NavBarTop extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _NavBarTopState extends State<NavBarTop> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -26,6 +29,13 @@ class _NavBarTopState extends State<NavBarTop> {
             icon: Icon(Icons.list, key: Key('task_list_icon')),
             onPressed: widget.handleRightButtonClick,
             ),
+        FlatButton.icon(
+          onPressed: () async {
+            await _auth.signOut();
+          },
+          icon: Icon(Icons.person),
+          label: Text('Logout'),
+        ),
       ],
     );
   }

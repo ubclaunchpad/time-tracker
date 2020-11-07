@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:time_tracker/src/time_tracker.dart';
+import 'package:time_tracker/src/authenticated_app.dart';
 
 void main() {
   testWidgets('Nav Bar Bottom', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: TimeTracker()));
+    await tester.pumpWidget(MaterialApp(home: AuthenticatedApp()));
 
     final dashboardScreenFinder = find.byKey(Key('dashboard_screen'));
     final timerScreenFinder = find.byKey(Key('add_task_screen'));
