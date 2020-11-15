@@ -23,6 +23,7 @@ class _scheduleTaskScreenState extends State<StatefulWidget>{
   Widget build(BuildContext context) {
     return Scaffold(
       key: Key('schedule_task_screen'),
+      appBar: _renderTopAppBar(),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -36,7 +37,6 @@ class _scheduleTaskScreenState extends State<StatefulWidget>{
 Widget renderTaskScheduling()=> Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget> [
-      SizedBox(height:30),
       _renderTextField('Task title', taskTitleFieldController),
       SizedBox(height:20),
       _renderTextField('Date', dateFieldController),
@@ -48,7 +48,7 @@ Widget renderTaskScheduling()=> Column(
       _renderCategoryChoices(),
       SizedBox(height:15),
       _renderTextField('Details', detailsFieldController),
-      SizedBox(height: 140),
+      SizedBox(height: 110),
       _renderSaveButton(),
     ],);
 
@@ -89,6 +89,11 @@ Widget _renderCategoryChoices() => Container(
         );
       }
   ));
+
+Widget _renderTopAppBar() => AppBar(
+        title: Text('Schedule Task'),
+        centerTitle: true,
+      );
 
 Widget _renderSaveButton() =>  ElevatedButton(
     key: Key('save_scheduled_task_button'),
