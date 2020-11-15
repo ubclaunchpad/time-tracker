@@ -8,7 +8,19 @@ class ScheduleTaskScreen extends StatefulWidget{
 }
 
 class _scheduleTaskScreenState extends State<StatefulWidget>{
-   Widget build(BuildContext context) {
+  final startTextFieldController = TextEditingController();
+  final endTextFieldController = TextEditingController();
+  final taskTitleFieldController = TextEditingController();
+  final dateFieldController = TextEditingController();
+  final detailsFieldController = TextEditingController();
+  String _finalCategory;
+  String _currentCategory;
+  String _taskTitle;
+  String _date;
+  String _startTime;
+  String _endTime;
+  String _details;
+  Widget build(BuildContext context) {
     return Scaffold(
       key: Key('schedule_task_screen'),
       body: SingleChildScrollView(
@@ -20,67 +32,87 @@ class _scheduleTaskScreenState extends State<StatefulWidget>{
             child: renderTaskScheduling()),)
     );
   }
-}
 
-Widget renderTaskScheduling(){
-  return Column(
+Widget renderTaskScheduling()=> Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget> [
       SizedBox(height:30),
-      _renderTextField('Task title'),
+      _renderTextField('Task title', taskTitleFieldController),
       SizedBox(height:20),
-      _renderTextField('Date'),
+      _renderTextField('Date', dateFieldController),
       SizedBox(height:20),
-      _renderSideBySideText('Start time', 'End time'),
+      _renderSideBySideText('Start time',startTextFieldController, 'End time',endTextFieldController),
       SizedBox(height: 30),
       Container(child: Text('Categories')),
       SizedBox(height:7),
       _renderCategoryChoices(),
       SizedBox(height:15),
-      Container(child: Text('Details')),
+      _renderTextField('Details', detailsFieldController),
+      SizedBox(height: 140),
+      _renderSaveButton(),
     ],);
-}
 
-Widget _renderTextField(String title) => TextField(
+Widget _renderTextField(String title, TextEditingController textFieldLabel) => TextField(
+  key: Key('text_field_$title'),
+  controller: textFieldLabel,
   decoration: InputDecoration(
     border: InputBorder.none,
     labelText: title,
   ),
 );
 
-Widget _renderSideBySideText(String left, String right) => Row(
+Widget _renderSideBySideText(String left, TextEditingController leftFieldLabel, String right, TextEditingController rightFieldLabel) => Row(
+  key: Key('side_by_side_text_$left'+'_$right'),
   children: <Widget>[
-    Expanded(child: _renderTextField(left),),
-    Expanded(child: _renderTextField(right)),
+    Expanded(child: _renderTextField(left,leftFieldLabel)),
+    Expanded(child: _renderTextField(right,rightFieldLabel)),
   ],
 );
 
-Widget _renderCategoryChoices(){
-  var catButtons = new List<Widget>();
-  for(int i = 0; i < TASK_CATEGORIES.length; i++){
-    catButtons.add(
-      FlatButton(
-        onPressed: () {},
-        child: Text(TASK_CATEGORIES[i]),
-        color: Colors.lightBlue[50],
-      )
-    );
-  }
-  return Row(
-      key: Key('toggle buttons category choice'),
-      children: catButtons,
-  );
-}
+Widget _renderCategoryChoices() => Container(
+      height: 40,
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemCount: TASK_CATEGORIES.length,
+        itemBuilder: (context,index){
+        final category = TASK_CATEGORIES[index];
+        return Container(
+          child: FlatButton(
+              //key: 
+              onPressed: () {
+                _currentCategory = category;
+              },
+              child: Text(category),
+              color: Colors.lightBlue[50],
+          ),
+        );
+      }
+  ));
 
-/*
-void colourButtons(int x, List<Widget> catButtons){
-  for(int i = 0; i < catButtons.length; i++){
-    if(i == x){
-      catButtons[i] = FlatButton(
-        onPressed: () { colourButtons(i, catButtons);},
-        child: Text(TASK_CATEGORIES[i]),
-        color: Colors.lightBlue[300],
-      );
-    }
+Widget _renderSaveButton() =>  ElevatedButton(
+    key: Key('save_scheduled_task_button'),
+    child: Text('Save'), 
+      onPressed: (){
+        _finalCategory = _currentCategory;
+        _currentCategory = null;
+        _taskTitle = taskTitleFieldController.text;
+        taskTitleFieldController.clear();
+        _date = dateFieldController.text;
+        dateFieldController.clear();
+        _startTime = startTextFieldController.text;
+        startTextFieldController.clear();
+        _endTime = endTextFieldController.text;
+        endTextFieldController.clear();
+        _details = detailsFieldController.text;
+        detailsFieldController.clear();
+      }
+);
+
+void dispose() {
+    // Clean up the controller when the widget is disposed.
+    startTextFieldController.dispose();
+    super.dispose();
   }
-}*/
+
+}
