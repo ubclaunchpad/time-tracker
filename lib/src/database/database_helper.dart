@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io' as io;
 
-import 'file:///C:/Users/sarah/AndroidStudioProjects/time_tracker/lib/src/models/task.dart';
+import 'package:flutter/rendering.dart';
+
+import '../models/task.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -29,19 +31,15 @@ class DatabaseHelper {
 
   initDb() async {
     WidgetsFlutterBinding.ensureInitialized();
-    // io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    // String path = join(documentsDirectory.path, "main.db");
-    // var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
-    // return theDb;
     print("making the src.database");
 
     Database database = await openDatabase(
-      join(await getDatabasesPath(), test ? 'database_test.db' : 'data.db'),
+      join(await getDatabasesPath(), test ? 'dbdev.db' : 'dbprod.db'),
       // When the src.database is first created, create a table to store tasks.
       onCreate: (db, version) {
         // Run the CREATE TABLE statement on the src.database.
         return db.execute(
-          "CREATE TABLE task(id INTEGER PRIMARY KEY, description TEXT, clock INTEGER, category TEXT)",
+          "CREATE TABLE task(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, startTime INTEGER, stopTime INTEGER, category TEXT)",
         );
       },
       // Set the version. This executes the onCreate function and provides a
@@ -70,14 +68,17 @@ class DatabaseHelper {
     }
 
     return Task(
-        id: tasks[0]["id"],
-        description: tasks[0]["description"],
-        category: tasks[0]["category"],
-        clock: tasks[0]["clock"]);
+      id: tasks[0]["id"],
+      description: tasks[0]["description"],
+      category: tasks[0]["category"],
+      startTime: tasks[0]["startTime"],
+      stopTime: tasks[0]["stopTime"],
+    );
   }
 
   // Define a function that inserts tasks into the src.database
-  Future<void> insertTask(Task task) async {
+  Future<int> insertTask(
+      String description, String category, int startTime, int stopTime) async {
     print("insert");
     // Get a reference to the src.database.
     final Database dbClient = await db;
@@ -86,10 +87,15 @@ class DatabaseHelper {
     // `conflictAlgorithm` to use in case the same Task is inserted twice.
     //
     // In this case, replace any previous data.
-    await dbClient.insert(
+    return await dbClient.insert(
       'task',
-      task.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      {
+        'description': description,
+        'startTime': startTime,
+        'stopTime': stopTime,
+        'category': category,
+      },
+      conflictAlgorithm: ConflictAlgorithm.fail,
     );
   }
 
@@ -106,18 +112,18 @@ class DatabaseHelper {
         id: maps[i]['id'],
         description: maps[i]['description'],
         category: maps[i]['category'],
-        clock: maps[i]['clock'],
+        startTime: maps[i]['startTime'],
+        stopTime: maps[i]['stopTime'],
       );
     });
   }
 
   // Update
-  Future<void> updateTask(Task task) async {
+  Future<int> updateTask(Task task) async {
     // Get a reference to the src.database.
     final Database dbClient = await db;
-
     // Update the given Task.
-    await dbClient.update(
+    return await dbClient.update(
       'task',
       task.toMap(),
       // Ensure that the Task has a matching id.
@@ -128,12 +134,12 @@ class DatabaseHelper {
   }
 
   // delete
-  Future<void> deleteTask(int id) async {
+  Future<int> deleteTask(int id) async {
     // Get a reference to the src.database.
     final Database dbClient = await db;
 
     // Remove the Task from the Database.
-    await dbClient.delete(
+    return await dbClient.delete(
       'task',
       // Use a `where` clause to delete a specific Task.
       where: "id = ?",
@@ -143,10 +149,10 @@ class DatabaseHelper {
   }
 
   Future<void> resetDatabase() async {
-    // Get a reference to the src.database.
-    List<Task> task = await tasks();
-    for (int i = 0; i < task.length; i++) {
-      await deleteTask(task[i].id);
-    }
+    final Database dbClient = await db;
+    await dbClient.execute("DROP TABLE task");
+    await dbClient.execute(
+      "CREATE TABLE task(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, startTime INTEGER, stopTime INTEGER, category TEXT)",
+    );
   }
 }

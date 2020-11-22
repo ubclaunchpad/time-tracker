@@ -3,28 +3,33 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:time_tracker/src/database/database_helper.dart';
-import 'file:///C:/Users/sarah/AndroidStudioProjects/time_tracker/lib/src/models/task.dart';
+import 'package:time_tracker/src/models/task.dart';
 
 import 'package:time_tracker/main.dart';
 
 void main() {
   DatabaseHelper db;
   final task = Task(
-      id: 1,
-      description: 'testDescription',
-      category: 'testCategory',
-      clock: 42069);
+    id: 1,
+    description: 'testDescription',
+    category: 'testCategory',
+    startTime: 69696,
+    stopTime: 420,
+  );
   final task2 = Task(
-      id: 2,
-      description: 'testDescription2',
-      category: 'testCategory2',
-      clock: 420420);
+    id: 2,
+    description: 'testDescription2',
+    category: 'testCategory2',
+    startTime: 69696,
+    stopTime: 420,
+  );
   final task3 = Task(
-      id: 3,
-      description: 'testDescription3',
-      category: 'testCategory3',
-      clock: 6969);
-
+    id: 3,
+    description: 'testDescription3',
+    category: 'testCategory3',
+    startTime: 69696,
+    stopTime: 420,
+  );
   setUp(() async {
     // clean up db before every test
     db = new DatabaseHelper(test: true);
@@ -42,7 +47,12 @@ void main() {
       expect(tasks.length, 0);
 
       // insert task
-      await db.insertTask(task);
+      await db.insertTask(
+        'testDescription',
+        'testCategory',
+        69696,
+        420,
+      );
 
       // assert that the task is now in the src.database
       tasks = await db.tasks();
@@ -57,9 +67,24 @@ void main() {
       expect(tasks.length, 0);
 
       // insert tasks
-      await db.insertTask(task);
-      await db.insertTask(task2);
-      await db.insertTask(task3);
+      await db.insertTask(
+        'testDescription',
+        'testCategory',
+        69696,
+        420,
+      );
+      await db.insertTask(
+        'testDescription2',
+        'testCategory2',
+        69696,
+        420,
+      );
+      await db.insertTask(
+        'testDescription3',
+        'testCategory3',
+        69696,
+        420,
+      );
 
       // assert that the tasks are now in the src.database
       tasks = await db.tasks();
@@ -75,14 +100,21 @@ void main() {
       expect(tasks.length, 0);
 
       // insert task
-      await db.insertTask(task);
+      await db.insertTask(
+        'testDescription',
+        'testCategory',
+        69696,
+        420,
+      );
 
       // update task
       Task updatedTask = Task(
-          id: task.id,
-          description: "this has been updated",
-          category: task.category,
-          clock: task.clock);
+        id: task.id,
+        description: "this has been updated",
+        category: task.category,
+        startTime: task.startTime,
+        stopTime: task.stopTime,
+      );
 
       await db.updateTask(updatedTask);
 
@@ -95,7 +127,12 @@ void main() {
 
     test('delete task should delete that task from the src.database', () async {
       //insert the task into the src.database
-      await db.insertTask(task);
+      await db.insertTask(
+        'testDescription',
+        'testCategory',
+        69696,
+        420,
+      );
       //assert that the task has been inserted into the src.database
       List<Task> tasks = await db.tasks();
       expect(tasks.length, 1);
@@ -111,7 +148,12 @@ void main() {
     test('get task should get the task with an id number from the src.database',
         () async {
       // insert the task
-      await db.insertTask(task);
+      await db.insertTask(
+        'testDescription',
+        'testCategory',
+        69696,
+        420,
+      );
       // get the task
       var taskTest = await db.getTask(task.id);
       // test the task
@@ -120,7 +162,12 @@ void main() {
     });
 
     test('get task that doesn\'t exist should return null', () async {
-      await db.insertTask(task);
+      await db.insertTask(
+        'testDescription',
+        'testCategory',
+        69696,
+        420,
+      );
       var failTest = await db.getTask(69);
       expect(failTest, null);
     });
