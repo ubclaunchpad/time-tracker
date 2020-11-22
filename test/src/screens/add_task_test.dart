@@ -57,5 +57,12 @@ void main() {
     // Stop task
     await tester.tap(find.text('Stop Tracking'));
     await tester.pump(const Duration(seconds: 1));
+
+    // Assert ability to move to Schedule Task Screen using Schedule Task Button
+    final scheduleTaskButtonFinder  = find.byKey(Key('schedule_task_button'));
+    expect(scheduleTaskButtonFinder, findsOneWidget);
+    await tester.tap(scheduleTaskButtonFinder);
+    await tester.pumpAndSettle();
+    expect(find.byKey(Key('schedule_task_screen')), findsOneWidget);
   });
 }

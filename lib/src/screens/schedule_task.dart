@@ -13,6 +13,7 @@ class _scheduleTaskScreenState extends State<StatefulWidget>{
   final taskTitleFieldController = TextEditingController();
   final dateFieldController = TextEditingController();
   final detailsFieldController = TextEditingController();
+  int detailsLineSize = 5; //max number of lines in "Details" field
   String _finalCategory;
   String _currentCategory;
   String _taskTitle;
@@ -20,6 +21,7 @@ class _scheduleTaskScreenState extends State<StatefulWidget>{
   String _startTime;
   String _endTime;
   String _details;
+
   Widget build(BuildContext context) {
     return Scaffold(
       key: Key('schedule_task_screen'),
@@ -36,25 +38,29 @@ class _scheduleTaskScreenState extends State<StatefulWidget>{
 
 Widget renderTaskScheduling()=> Column(
     crossAxisAlignment: CrossAxisAlignment.start,
+    key: Key('render_task_scheduling_screen'),
     children: <Widget> [
-      _renderTextField('Task title', taskTitleFieldController),
+      _renderTextField('Task title', taskTitleFieldController, 1),
       SizedBox(height:20),
-      _renderTextField('Date', dateFieldController),
+      //TODO: implement constraints on date format in text field or replace text field with DatePicker
+      _renderTextField('Date', dateFieldController, 1),
       SizedBox(height:20),
+      //TODO: implement constraints on Start and End Time format in text field
       _renderSideBySideText('Start time',startTextFieldController, 'End time',endTextFieldController),
       SizedBox(height: 30),
-      Container(child: Text('Categories')),
+      Container(key: Key('Categories_text'), child: Text('Categories')),
       SizedBox(height:7),
       _renderCategoryChoices(),
       SizedBox(height:15),
-      _renderTextField('Details', detailsFieldController),
-      SizedBox(height: 110),
+      _renderTextField('Details', detailsFieldController, detailsLineSize),
+      SizedBox(height: 20),
       _renderSaveButton(),
     ],);
 
-Widget _renderTextField(String title, TextEditingController textFieldLabel) => TextField(
+Widget _renderTextField(String title, TextEditingController textFieldLabel, int maxFieldLines) => TextField(
   key: Key('text_field_$title'),
   controller: textFieldLabel,
+  maxLines: maxFieldLines,
   decoration: InputDecoration(
     border: InputBorder.none,
     labelText: title,
@@ -64,12 +70,13 @@ Widget _renderTextField(String title, TextEditingController textFieldLabel) => T
 Widget _renderSideBySideText(String left, TextEditingController leftFieldLabel, String right, TextEditingController rightFieldLabel) => Row(
   key: Key('side_by_side_text_$left'+'_$right'),
   children: <Widget>[
-    Expanded(child: _renderTextField(left,leftFieldLabel)),
-    Expanded(child: _renderTextField(right,rightFieldLabel)),
+    Expanded(child: _renderTextField(left,leftFieldLabel, 1)),
+    Expanded(child: _renderTextField(right,rightFieldLabel, 1)),
   ],
 );
 
 Widget _renderCategoryChoices() => Container(
+      key: Key('buttons_Categories'),
       height: 40,
       child: ListView.builder(
         shrinkWrap: true,
@@ -79,7 +86,7 @@ Widget _renderCategoryChoices() => Container(
         final category = TASK_CATEGORIES[index];
         return Container(
           child: FlatButton(
-              //key: 
+              key: Key('flat_button_$category'),
               onPressed: () {
                 _currentCategory = category;
               },
@@ -91,6 +98,7 @@ Widget _renderCategoryChoices() => Container(
   ));
 
 Widget _renderTopAppBar() => AppBar(
+        key: Key('top_app_bar'),
         title: Text('Schedule Task'),
         centerTitle: true,
       );
@@ -119,5 +127,4 @@ void dispose() {
     startTextFieldController.dispose();
     super.dispose();
   }
-
 }
