@@ -40,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 20,
               ),
               TextFormField(
+                key: Key('email_input'),
                 onChanged: (input) {
                   setState(() => email = input);
                 },
@@ -49,6 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 20,
               ),
               TextFormField(
+                key: Key('password_input'),
                 onChanged: (input) {
                   setState(() => password = input);
                 },
