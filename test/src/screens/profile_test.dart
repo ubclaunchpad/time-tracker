@@ -9,6 +9,8 @@ void main() {
     await tester.pumpWidget(TestHelper.makeTestableWidget(screen));
 
     // Placeholder test - replace after implementing screen features
-    expect(find.text('Profile'), findsOneWidget);
+    expect(find.text('Name'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
   });
 }

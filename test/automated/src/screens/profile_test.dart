@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:time_tracker/src/screens/profile.dart';
+
 import '../test_helper.dart';
 
 void main() {
@@ -9,6 +11,8 @@ void main() {
     await tester.pumpWidget(TestHelper.makeTestableWidget(screen));
 
     // Placeholder test - replace after implementing screen features
-    expect(find.text('Profile'), findsOneWidget);
+    expect(find.text('Name'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
   });
 }
