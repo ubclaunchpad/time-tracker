@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:time_tracker/src/resources/task_categories.dart';
+import 'package:time_tracker/src/screens/schedule_task.dart';
 import 'package:time_tracker/src/utils/time_util.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
+  
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
@@ -91,6 +93,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
       );
 
+//TODO: remove this button when navigation to Schedule Task Screen is updated
+  Widget _renderScheduleTaskButton() => ElevatedButton(
+    key: Key('schedule_task_button'),
+    child: Text('Schedule Task'), 
+      onPressed: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder:(context) => ScheduleTaskScreen()),
+        );
+      }
+    );
+
   Widget _renderTimeElapsed() {
     return Column(
       children: <Widget>[
@@ -131,6 +145,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         _renderAddTaskButton(),
         SizedBox(height: 40),
         _lastDuration != null ? _renderTimeElapsed() : Container(),
+
+        //TODO: remove this button when navigation to Schedule Task Screen is updated
+        SizedBox(height:80),
+        _renderScheduleTaskButton(),
       ],
     );
   }
