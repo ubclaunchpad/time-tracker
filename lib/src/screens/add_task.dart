@@ -3,18 +3,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:time_tracker/src/resources/task_categories.dart';
-import 'package:time_tracker/src/screens/schedule_task.dart';
 import 'package:time_tracker/src/utils/time_util.dart';
+import 'package:time_tracker/src/database/database_helper.dart';
+import '../models/task.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
-  
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final _descriptionController = TextEditingController();
   final _stopwatch = Stopwatch();
+  var _startTime;
   String _selectedCategory;
 
   var _isTracking = false;
@@ -24,6 +25,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   void _startTrackingTask() {
     if (_descriptionController.text.isNotEmpty && _selectedCategory != null) {
+      _startTime = new DateTime.now().millisecondsSinceEpoch;
       setState(() {
         _isTracking = true;
         _stopwatch.reset();
@@ -32,7 +34,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
+  //REMOVE THE ASYNC LATER ITS JUST FOR TESTING PURPOSES
   void _stopTrackingTask() {
+    DatabaseHelper db = new DatabaseHelper();
+    db.insertTask(
+      _descriptionController.text,
+      _lastCategory,
+      _startTime,
+      _startTime + (_stopwatch.elapsedMilliseconds / 1000).round(),
+    );
     setState(() {
       _isTracking = false;
       _stopwatch.stop();
@@ -93,18 +103,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
       );
 
-//TODO: remove this button when navigation to Schedule Task Screen is updated
-  Widget _renderScheduleTaskButton() => ElevatedButton(
-    key: Key('schedule_task_button'),
-    child: Text('Schedule Task'), 
-      onPressed: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder:(context) => ScheduleTaskScreen()),
-        );
-      }
-    );
-
   Widget _renderTimeElapsed() {
     return Column(
       children: <Widget>[
@@ -145,10 +143,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         _renderAddTaskButton(),
         SizedBox(height: 40),
         _lastDuration != null ? _renderTimeElapsed() : Container(),
-
-        //TODO: remove this button when navigation to Schedule Task Screen is updated
-        SizedBox(height:80),
-        _renderScheduleTaskButton(),
       ],
     );
   }
